@@ -18,9 +18,9 @@ function RentBuy() {
         <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold' }}>
           Filter Properties
         </Typography>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid xs={12} sm={4} md={3}>
-            <FormControl fullWidth>
+        <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: '80%', margin: '0 auto' }}>
+          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
+            <FormControl fullWidth sx={{ minWidth: 200 }}>
               <InputLabel>Location</InputLabel>
               <Select
                 value={location}
@@ -36,8 +36,8 @@ function RentBuy() {
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={4} md={3}>
-            <FormControl fullWidth>
+          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
+            <FormControl fullWidth sx={{ minWidth: 200 }}>
               <InputLabel>Property Type</InputLabel>
               <Select
                 value={propertyType}
@@ -53,8 +53,8 @@ function RentBuy() {
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={4} md={3}>
-            <FormControl fullWidth>
+          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
+            <FormControl fullWidth sx={{ minWidth: 200 }}>
               <InputLabel>Price Range (BDT)</InputLabel>
               <Select
                 value={priceRange}
