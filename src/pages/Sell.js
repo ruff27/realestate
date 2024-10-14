@@ -10,7 +10,6 @@ function Sell() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform form submission logic here
     console.log({
       image,
     });

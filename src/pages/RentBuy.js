@@ -1,52 +1,13 @@
-import React, { useState } from 'react';
-import { Container, Typography, Box, Grid, Button, Chip, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, Box, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Chip, Button } from '@mui/material';
 import PropertyCard from '../components/PropertyCard';
+import properties from '../data/propertyData';
+import { filterProperties } from '../services/propertyService'; // Import the filtering function
 
-// Sample properties list
-const properties = [
-  {
-    id: 1,
-    type: 'Apartment',
-    location: 'Gulshan, Dhaka',
-    price: '106083',
-    bedrooms: 3,
-    bathrooms: 2,
-    image: '/images/p1.avif',
-  },
-  {
-    id: 2,
-    type: 'House',
-    location: 'Banani, Dhaka',
-    price: '62560',
-    bedrooms: 5,
-    bathrooms: 4,
-    image: '/images/p1.avif',
-  },
-  {
-    id: 3,
-    type: 'Studio',
-    location: 'Dhanmondi, Dhaka',
-    price: '42741',
-    bedrooms: 1,
-    bathrooms: 1,
-    image: '/images/p1.avif',
-  },
-  {
-    id: 4,
-    type: 'Condo',
-    location: 'Uttara, Dhaka',
-    price: '40004',
-    bedrooms: 2,
-    bathrooms: 2,
-    image: '/images/p1.avif',
-  },
-  // Add more properties as needed
-];
-
-// Property types for filter chips
 const propertyTypes = ['All', 'Apartment', 'House', 'Studio', 'Condo'];
 
 function RentBuy() {
+  // States for filters
   const [selectedType, setSelectedType] = useState('All');
   const [location, setLocation] = useState('');
   const [bedrooms, setBedrooms] = useState('');
@@ -54,31 +15,41 @@ function RentBuy() {
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
 
-  // Handle the filter by property type
+  // State to store the filtered properties
+  const [filteredProperties, setFilteredProperties] = useState(properties);
+
+  // Use effect to filter properties when selectedType changes
+  useEffect(() => {
+    handleSearch();
+  }, [selectedType]);
+
+  // Function to handle type filter selection
   const handleTypeFilter = (type) => {
     setSelectedType(type);
   };
 
-  // Filter properties based on filters and type
-  const filteredProperties = properties.filter((property) => {
-    const matchesType = selectedType === 'All' || property.type === selectedType;
-    const matchesLocation = location === '' || property.location.toLowerCase().includes(location.toLowerCase());
-    const matchesBedrooms = bedrooms === '' || property.bedrooms === Number(bedrooms);
-    const matchesBathrooms = bathrooms === '' || property.bathrooms === Number(bathrooms);
-    const matchesPrice =
-      (priceMin === '' || property.price >= priceMin) && (priceMax === '' || property.price <= priceMax);
+  // Function to handle search and filter properties
+  const handleSearch = () => {
+    const filters = {
+      type: selectedType,
+      location,
+      bedrooms,
+      bathrooms,
+      priceMin,
+      priceMax,
+    };
 
-    return matchesType && matchesLocation && matchesBedrooms && matchesBathrooms && matchesPrice;
-  });
+    const filtered = filterProperties(properties, filters);
+    setFilteredProperties(filtered);
+  };
 
   return (
-    <Container sx={{ marginTop: 5 }}>
-      {/* Page Title */}
-      <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold' }}>
+    <Container sx={{ marginTop: 5, bgcolor: '#EFF9FE' }}>
+      <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold', color: '#0B1F23' }}>
         Properties for Rent
       </Typography>
 
-      {/* Property Type Filter Chips */}
+      {/* Property Type Filter */}
       <Box sx={{ marginBottom: 3 }}>
         {propertyTypes.map((type) => (
           <Chip
@@ -88,17 +59,16 @@ function RentBuy() {
             onClick={() => handleTypeFilter(type)}
             sx={{
               marginRight: 1,
-              backgroundColor: selectedType === type ? '#0B1F23' : 'default',
-              color: selectedType === type ? '#fff' : 'default',
+              backgroundColor: selectedType === type ? '#0B1F23' : '#BFBBB8',
+              color: selectedType === type ? '#fff' : '#0B1F23',
             }}
           />
         ))}
       </Box>
 
-      {/* Filters Section */}
-      <Box sx={{ marginBottom: 5, textAlign: 'center' }}>
-        <Grid container spacing={3} justifyContent="center">
-          {/* Location Filter */}
+      {/* Search Filters */}
+      <Box sx={{ marginBottom: 5 }}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               fullWidth
@@ -107,10 +77,9 @@ function RentBuy() {
               onChange={(e) => setLocation(e.target.value)}
               variant="outlined"
               placeholder="Enter location"
+              InputLabelProps={{ style: { color: '#0B1F23' } }}
             />
           </Grid>
-
-          {/* Bedrooms Filter */}
           <Grid item xs={12} sm={6} md={4}>
             <FormControl fullWidth>
               <InputLabel>Bedrooms</InputLabel>
@@ -128,8 +97,6 @@ function RentBuy() {
               </Select>
             </FormControl>
           </Grid>
-
-          {/* Bathrooms Filter */}
           <Grid item xs={12} sm={6} md={4}>
             <FormControl fullWidth>
               <InputLabel>Bathrooms</InputLabel>
@@ -147,8 +114,6 @@ function RentBuy() {
               </Select>
             </FormControl>
           </Grid>
-
-          {/* Price Range Filters */}
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               fullWidth
@@ -159,7 +124,6 @@ function RentBuy() {
               variant="outlined"
             />
           </Grid>
-
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               fullWidth
@@ -170,20 +134,32 @@ function RentBuy() {
               variant="outlined"
             />
           </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 2 }}
+              fullWidth
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </Grid>
         </Grid>
-
-        <Button variant="contained" sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 3 }}>
-          Search
-        </Button>
       </Box>
 
-      {/* Property Listings */}
+      {/* Display Filtered Properties */}
       <Grid container spacing={4}>
-        {filteredProperties.map((property) => (
-          <Grid item xs={12} sm={6} md={4} key={property.id}>
-            <PropertyCard property={property} />
-          </Grid>
-        ))}
+        {filteredProperties.length > 0 ? (
+          filteredProperties.map((property) => (
+            <Grid item xs={12} sm={6} md={4} key={property.id}>
+              <PropertyCard property={property} />
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="h6" sx={{ marginTop: 3, textAlign: 'center', color: '#0B1F23' }}>
+            No properties found. Please adjust your search criteria.
+          </Typography>
+        )}
       </Grid>
     </Container>
   );
