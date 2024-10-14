@@ -1,94 +1,58 @@
+// New Navbar.js (components/Navbar.js)
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, Box } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, IconButton, Container, Box, Typography, Button, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Menu as MenuIcon, Home as HomeIcon, Login as LoginIcon, PersonAdd as PersonAddIcon, Search as SearchIcon, Sell as SellIcon } from '@mui/icons-material';
 
-function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+const Navbar = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navItems = [
+    { text: 'Home', icon: <HomeIcon />, path: '/' },
+    { text: 'Login', icon: <LoginIcon />, path: '/login' },
+    { text: 'Signup', icon: <PersonAddIcon />, path: '/signup' },
+    { text: 'Rent/Buy', icon: <SearchIcon />, path: '/rentbuy' },
+    { text: 'Sell', icon: <SellIcon />, path: '/sell' },
+  ];
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Real Estate Platform
-      </Typography>
+    <Box onClick={() => setDrawerOpen(false)} sx={{ width: 250 }}>
       <List>
-        <ListItem button component={Link} to="/">
-          <ListItemText primary="Home" />
-        </ListItem>
-        <ListItem button component={Link} to="/rentbuy">
-          <ListItemText primary="Rent/Buy" />
-        </ListItem>
-        <ListItem button component={Link} to="/sell">
-          <ListItemText primary="Sell" />
-        </ListItem>
+        {navItems.map((item) => (
+          <ListItem key={item.text} component={Link} to={item.path}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
 
   return (
-    <Box>
-      <AppBar position="static" sx={{ backgroundColor: '#2B7B8C' }}>
-        <Toolbar>
-          {/* Logo and Name */}
-          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <img src="/images/logo.png" alt="Logo" style={{ height: '40px', marginRight: '15px' }} />
-            <Typography variant="h6" noWrap component={Link} to="/" sx={{ color: '#EFF9FE', textDecoration: 'none' }}>
-              Real Estate Platform
-            </Typography>
-          </Box>
-
-          {/* Menu for larger screens */}
-          <Box sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}>
-            <Button component={Link} to="/" sx={{ color: '#EFF9FE' }}>
-              Home
-            </Button>
-            <Button component={Link} to="/rentbuy" sx={{ color: '#EFF9FE' }}>
-              Rent/Buy
-            </Button>
-            <Button component={Link} to="/sell" sx={{ color: '#EFF9FE' }}>
-              Sell
-            </Button>
-          </Box>
-
-          {/* Login button */}
-          <Button component={Link} to="/login" sx={{ color: '#EFF9FE', marginLeft: 'auto' }}>
-            Login
-          </Button>
-
-          {/* Hamburger menu for mobile */}
+    <AppBar position="sticky" color="primary">
+      <Container maxWidth="lg">
+        <Toolbar disableGutters>
+          <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+            RealEstate
+          </Typography>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="end"
-            onClick={handleDrawerToggle}
-            sx={{ display: { sm: 'none' } }}
+            onClick={() => setDrawerOpen(true)}
           >
             <MenuIcon />
           </IconButton>
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
+            {drawer}
+          </Drawer>
         </Toolbar>
-      </AppBar>
-
-      {/* Mobile drawer */}
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
-        }}
-      >
-        {drawer}
-      </Drawer>
-    </Box>
+      </Container>
+    </AppBar>
   );
-}
+};
 
 export default Navbar;
