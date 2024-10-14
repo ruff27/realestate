@@ -1,39 +1,11 @@
-<<<<<<< HEAD
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-=======
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { ThemeProvider, createTheme, CssBaseline, Box, Container, AppBar, Toolbar, Typography, Button, Card, CardContent, CardMedia, CardActions, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, useMediaQuery, InputBase, Chip, Stack, Grid } from '@mui/material';
 import { Menu as MenuIcon, Home as HomeIcon, Login as LoginIcon, PersonAdd as PersonAddIcon, Search as SearchIcon, Sell as SellIcon, Favorite as FavoriteIcon, Share as ShareIcon, LocationOn as LocationIcon, AttachMoney as PriceIcon } from '@mui/icons-material';
->>>>>>> ebe17b8 (design changed)
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import RentBuy from './pages/RentBuy';
 import Sell from './pages/Sell';
-<<<<<<< HEAD
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/rentbuy" element={<RentBuy />} />
-        <Route path="/sell" element={<Sell />} />
-      </Routes>
-      <Footer />
-    </Router>
-  );
-}
-
-export default App;
-=======
 
 const theme = createTheme({
   palette: {
@@ -237,4 +209,3 @@ const App = () => (
 );
 
 export default App;
->>>>>>> ebe17b8 (design changed)

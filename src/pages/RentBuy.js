@@ -1,164 +1,190 @@
-import React from 'react';
-import { Container, Typography, Box, Button, Card, CardContent, CardMedia, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import React, { useState } from 'react';
+import { Container, Typography, Box, Grid, Button, Chip, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import PropertyCard from '../components/PropertyCard';
+
+// Sample properties list
+const properties = [
+  {
+    id: 1,
+    type: 'Apartment',
+    location: 'Gulshan, Dhaka',
+    price: '106083',
+    bedrooms: 3,
+    bathrooms: 2,
+    image: '/images/p1.avif',
+  },
+  {
+    id: 2,
+    type: 'House',
+    location: 'Banani, Dhaka',
+    price: '62560',
+    bedrooms: 5,
+    bathrooms: 4,
+    image: '/images/p1.avif',
+  },
+  {
+    id: 3,
+    type: 'Studio',
+    location: 'Dhanmondi, Dhaka',
+    price: '42741',
+    bedrooms: 1,
+    bathrooms: 1,
+    image: '/images/p1.avif',
+  },
+  {
+    id: 4,
+    type: 'Condo',
+    location: 'Uttara, Dhaka',
+    price: '40004',
+    bedrooms: 2,
+    bathrooms: 2,
+    image: '/images/p1.avif',
+  },
+  // Add more properties as needed
+];
+
+// Property types for filter chips
+const propertyTypes = ['All', 'Apartment', 'House', 'Studio', 'Condo'];
 
 function RentBuy() {
-  const [location, setLocation] = React.useState('');
-  const [propertyType, setPropertyType] = React.useState('');
-  const [priceRange, setPriceRange] = React.useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [location, setLocation] = useState('');
+  const [bedrooms, setBedrooms] = useState('');
+  const [bathrooms, setBathrooms] = useState('');
+  const [priceMin, setPriceMin] = useState('');
+  const [priceMax, setPriceMax] = useState('');
 
-  const handleLocationChange = (event) => setLocation(event.target.value);
-  const handlePropertyTypeChange = (event) => setPropertyType(event.target.value);
-  const handlePriceRangeChange = (event) => setPriceRange(event.target.value);
+  // Handle the filter by property type
+  const handleTypeFilter = (type) => {
+    setSelectedType(type);
+  };
+
+  // Filter properties based on filters and type
+  const filteredProperties = properties.filter((property) => {
+    const matchesType = selectedType === 'All' || property.type === selectedType;
+    const matchesLocation = location === '' || property.location.toLowerCase().includes(location.toLowerCase());
+    const matchesBedrooms = bedrooms === '' || property.bedrooms === Number(bedrooms);
+    const matchesBathrooms = bathrooms === '' || property.bathrooms === Number(bathrooms);
+    const matchesPrice =
+      (priceMin === '' || property.price >= priceMin) && (priceMax === '' || property.price <= priceMax);
+
+    return matchesType && matchesLocation && matchesBedrooms && matchesBathrooms && matchesPrice;
+  });
 
   return (
     <Container sx={{ marginTop: 5 }}>
+      {/* Page Title */}
+      <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold' }}>
+        Properties for Rent
+      </Typography>
+
+      {/* Property Type Filter Chips */}
+      <Box sx={{ marginBottom: 3 }}>
+        {propertyTypes.map((type) => (
+          <Chip
+            key={type}
+            label={type}
+            clickable
+            onClick={() => handleTypeFilter(type)}
+            sx={{
+              marginRight: 1,
+              backgroundColor: selectedType === type ? '#0B1F23' : 'default',
+              color: selectedType === type ? '#fff' : 'default',
+            }}
+          />
+        ))}
+      </Box>
+
       {/* Filters Section */}
       <Box sx={{ marginBottom: 5, textAlign: 'center' }}>
-        <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold' }}>
-          Filter Properties
-        </Typography>
-        <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: '80%', margin: '0 auto' }}>
-          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
-            <FormControl fullWidth sx={{ minWidth: 200 }}>
-              <InputLabel>Location</InputLabel>
+        <Grid container spacing={3} justifyContent="center">
+          {/* Location Filter */}
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              fullWidth
+              label="Location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              variant="outlined"
+              placeholder="Enter location"
+            />
+          </Grid>
+
+          {/* Bedrooms Filter */}
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Bedrooms</InputLabel>
               <Select
-                value={location}
-                onChange={handleLocationChange}
-                label="Location"
+                value={bedrooms}
+                onChange={(e) => setBedrooms(e.target.value)}
+                label="Bedrooms"
               >
-                <MenuItem value="basundhara">Basundhara, Dhaka</MenuItem>
-                <MenuItem value="uttara">Uttara, Dhaka</MenuItem>
-                <MenuItem value="mirpur">Mirpur, Dhaka</MenuItem>
-                <MenuItem value="agrabad">Agrabad, Chattogram</MenuItem>
-                <MenuItem value="gulshan">Gulshan, Dhaka</MenuItem>
+                <MenuItem value="">Any</MenuItem>
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="5">5</MenuItem>
               </Select>
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
-            <FormControl fullWidth sx={{ minWidth: 200 }}>
-              <InputLabel>Property Type</InputLabel>
+          {/* Bathrooms Filter */}
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Bathrooms</InputLabel>
               <Select
-                value={propertyType}
-                onChange={handlePropertyTypeChange}
-                label="Property Type"
+                value={bathrooms}
+                onChange={(e) => setBathrooms(e.target.value)}
+                label="Bathrooms"
               >
-                <MenuItem value="1-bed">1 Bed Apartment</MenuItem>
-                <MenuItem value="2-bed">2 Bed Apartment</MenuItem>
-                <MenuItem value="3-bed">3 Bed Apartment</MenuItem>
-                <MenuItem value="house">House</MenuItem>
-                <MenuItem value="land">Land</MenuItem>
+                <MenuItem value="">Any</MenuItem>
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+                <MenuItem value="4">4</MenuItem>
+                <MenuItem value="5">5</MenuItem>
               </Select>
             </FormControl>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4} lg={3} sx={{ marginBottom: 2 }}>
-            <FormControl fullWidth sx={{ minWidth: 200 }}>
-              <InputLabel>Price Range (BDT)</InputLabel>
-              <Select
-                value={priceRange}
-                onChange={handlePriceRangeChange}
-                label="Price Range"
-              >
-                <MenuItem value="10000">Up to BDT 10,000</MenuItem>
-                <MenuItem value="20000">BDT 20,000 - BDT 50,000</MenuItem>
-                <MenuItem value="50000">Above BDT 50,000</MenuItem>
-              </Select>
-            </FormControl>
+          {/* Price Range Filters */}
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              fullWidth
+              label="Min Price (BDT)"
+              type="number"
+              value={priceMin}
+              onChange={(e) => setPriceMin(e.target.value)}
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              fullWidth
+              label="Max Price (BDT)"
+              type="number"
+              value={priceMax}
+              onChange={(e) => setPriceMax(e.target.value)}
+              variant="outlined"
+            />
           </Grid>
         </Grid>
 
-        <Button 
-          variant="contained" 
-          sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 3, paddingX: 4, paddingY: 1 }}
-        >
+        <Button variant="contained" sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 3 }}>
           Search
         </Button>
       </Box>
 
-      {/* Available Properties Section */}
-      <Box sx={{ marginTop: 5 }}>
-        <Typography variant="h4" sx={{ marginBottom: 3, fontWeight: 'bold', textAlign: 'center' }}>
-          Available Properties
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid xs={12} sm={6} md={4}>
-            <Card sx={{ boxShadow: 3 }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image="/images/p1.avif"
-                alt="Property 1"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  1 Bed Apartment
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Location: Basundhara, Dhaka <br /> Price: BDT 8000
-                </Typography>
-                <Button 
-                  size="small" 
-                  sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 2 }}
-                >
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
+      {/* Property Listings */}
+      <Grid container spacing={4}>
+        {filteredProperties.map((property) => (
+          <Grid item xs={12} sm={6} md={4} key={property.id}>
+            <PropertyCard property={property} />
           </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
-            <Card sx={{ boxShadow: 3 }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image="/images/p1.avif"
-                alt="Property 2"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  2 Bed Apartment
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Location: Gulshan, Dhaka <br /> Price: BDT 16,000
-                </Typography>
-                <Button 
-                  size="small" 
-                  sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 2 }}
-                >
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
-            <Card sx={{ boxShadow: 3 }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image="/images/p1.avif"
-                alt="Property 3"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Land
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Location: Agrabad, Chattogram <br /> Price: BDT 15,00,000
-                </Typography>
-                <Button 
-                  size="small" 
-                  sx={{ backgroundColor: '#2B7B8C', color: '#EFF9FE', marginTop: 2 }}
-                >
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Box>
+        ))}
+      </Grid>
     </Container>
   );
 }
