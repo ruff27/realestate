@@ -162,7 +162,7 @@ function Home() {
         {/* Hero Section */}
         <Box
           sx={{
-            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/p1.avif)',
+            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/p1.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: { xs: '60vh', sm: '70vh', md: '80vh' },
