@@ -16,7 +16,7 @@ function generateProperties(count, sold = false) {
     bedrooms: Math.floor(Math.random() * 5) + 1,
     bathrooms: Math.floor(Math.random() * 4) + 1,
     area: Math.floor(Math.random() * (5000 - 500) + 500),
-    image: "/images/p1.avif",
+    image: "/images/p1.png",
     isSold: sold // Mark the property as sold or unsold
   }));
 }
@@ -57,7 +57,7 @@ function Sold() {
                   <CardMedia
                     component="img"
                     height="140"
-                    image="/images/p1.avif"
+                    image="/images/p1.png"
                     alt={property.title}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
@@ -88,7 +88,7 @@ function Sold() {
           <>
             <DialogTitle>{selectedProperty.title}</DialogTitle>
             <DialogContent>
-              <img src="/images/p1.avif" alt={selectedProperty.title} style={{width: '100%', marginBottom: '1rem'}} />
+              <img src="/images/p1.png" alt={selectedProperty.title} style={{width: '100%', marginBottom: '1rem'}} />
               <Typography variant="body1">SOLD FOR: {selectedProperty.price.toLocaleString()} BDT</Typography>
               <Typography variant="body1">Location: {selectedProperty.location}</Typography>
               <Typography variant="body1">Bedrooms: {selectedProperty.bedrooms}</Typography>
