@@ -17,7 +17,7 @@ function generateProperties(count) {
     bedrooms: Math.floor(Math.random() * 5) + 1,
     bathrooms: Math.floor(Math.random() * 4) + 1,
     area: Math.floor(Math.random() * (3000 - 300) + 300),
-    image: "/images/p1.avif"
+    image: "/images/p1.png"
   }));
 }
 
