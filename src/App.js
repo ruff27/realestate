@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Buy from './pages/Buy';
 import Rent from './pages/Rent';
-import Sell from './pages/Sell';
+import Sold from './pages/Sold';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
@@ -72,7 +72,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/buy" element={<Buy />} />
               <Route path="/rent" element={<Rent />} />
-              <Route path="/sell" element={<Sell />} />
+              <Route path="/sold" element={<Sold />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>

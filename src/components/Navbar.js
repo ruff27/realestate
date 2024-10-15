@@ -52,7 +52,7 @@ function Navbar() {
     { text: 'Home', path: '/' },
     { text: 'Buy', path: '/buy' },
     { text: 'Rent', path: '/rent' },
-    { text: 'Sell', path: '/sell' },
+    { text: 'Sold', path: '/sold' },
   ];
 
   const drawer = (
