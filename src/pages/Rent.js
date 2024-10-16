@@ -97,7 +97,7 @@ function Rent() {
             align="center"
             sx={{ mb: { xs: 2, sm: 3, md: 4 } }}
           >
-            Find your perfect rental in Dhaka
+            Find your perfect rental
           </Typography>
           
           <Box sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
