@@ -11,6 +11,7 @@ import Rent from './pages/Rent';
 import Sold from './pages/Sold';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 
 const theme = createTheme({
   palette: {
@@ -75,6 +76,7 @@ function App() {
               <Route path="/sold" element={<Sold />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
           </Box>
           <Footer />

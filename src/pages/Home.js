@@ -9,7 +9,7 @@ import dhakaLocations from '../components/DhakaLocations';
 const API_KEY = 'AIzaSyAWaLpMqsy9pSUbTlkiqm9VxO8v-71w8A8';
 
 function generateProperties(count, forRent = false) {
-  return Array(count).fill().map((_, index) => {
+  return Array(count).fill().map((_, index) => {c
     const location = dhakaLocations[index % dhakaLocations.length];
     return {
       id: index + 1,

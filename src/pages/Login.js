@@ -11,6 +11,11 @@ function Login() {
         <Button variant="contained" fullWidth sx={{ backgroundColor: '#2B7B8C', marginBottom: 2 }}>
           Login
         </Button>
+        <Typography variant="body2">
+            <a href="/forgot-password" style={{ textDecoration: 'none', color: '#2B7B8C' }}>
+              Forgot Password?
+            </a>
+        </Typography>
         <Typography variant="body2">Don't have an account? Sign up <a href="/signup">here</a></Typography>
       </Box>
     </Container>
