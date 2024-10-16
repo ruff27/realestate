@@ -17,7 +17,7 @@ function generateProperties(count) {
     bedrooms: Math.floor(Math.random() * 5) + 1,
     bathrooms: Math.floor(Math.random() * 4) + 1,
     area: Math.floor(Math.random() * (3000 - 300) + 300),
-    image: "/images/p1.avif"
+    image: "/images/p1.png"
   }));
 }
 
@@ -148,7 +148,7 @@ function Rent() {
                   <CardMedia
                     component="img"
                     height={isExtraSmallScreen ? "100" : "140"}
-                    image="/images/p1.avif"
+                    image="/images/p1.png"
                     alt={property.title}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
@@ -189,7 +189,7 @@ function Rent() {
           <>
             <DialogTitle>{selectedProperty.title}</DialogTitle>
             <DialogContent>
-              <img src="/images/p1.avif" alt={selectedProperty.title} style={{width: '100%', marginBottom: '1rem'}} />
+              <img src="/images/p1.png" alt={selectedProperty.title} style={{width: '100%', marginBottom: '1rem'}} />
               <Typography variant="body1">Price: {selectedProperty.price.toLocaleString()} BDT/month</Typography>
               <Typography variant="body1">Type: {selectedProperty.type.charAt(0).toUpperCase() + selectedProperty.type.slice(1)}</Typography>
               <Typography variant="body1">Location: {selectedProperty.location}</Typography>

@@ -8,7 +8,6 @@ function Signup() {
         <Typography variant="h4" sx={{ marginBottom: 2 }}>Sign Up</Typography>
         <TextField label="Name" variant="outlined" fullWidth sx={{ marginBottom: 2 }} />
         <TextField label="Email or Phone" variant="outlined" fullWidth sx={{ marginBottom: 2 }} />
-        <TextField label="Phone" variant="outlined" fullWidth sx={{ marginBottom: 2 }} />
         <TextField label="Password" type="password" variant="outlined" fullWidth sx={{ marginBottom: 2 }} />
         <TextField label="Confirm Password" type="password" variant="outlined" fullWidth sx={{ marginBottom: 2 }} />
         <Button variant="contained" fullWidth sx={{ backgroundColor: '#2B7B8C', marginBottom: 2 }}>

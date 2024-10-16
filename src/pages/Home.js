@@ -24,7 +24,7 @@ function generateProperties(count, forRent = false) {
       area: Math.floor(Math.random() * (5000 - 500) + 500),
       lat: 23.8103 + (Math.random() - 0.5) * 0.1,
       lng: 90.4125 + (Math.random() - 0.5) * 0.1,
-      image: "/images/p1.avif",
+      image: "/images/p1.png",
       forRent: forRent
     };
   });
@@ -162,7 +162,7 @@ function Home() {
         {/* Hero Section */}
         <Box
           sx={{
-            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/p1.avif)',
+            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/p1.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: { xs: '60vh', sm: '70vh', md: '80vh' },
