@@ -97,7 +97,7 @@ function Buy() {
             align="center"
             sx={{ mb: { xs: 2, sm: 3, md: 4 } }}
           >
-            Find your dream home in Dhaka
+            Find your dream home
           </Typography>
           
           <Box sx={{ mb: { xs: 2, sm: 3, md: 4 } }}>
